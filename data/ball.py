@@ -4,7 +4,7 @@ import random
 from . import tools
 
 class Ball:
-    def __init__(self, screen_rect, width, height, color=(255,255,255), menu=False, speed=3):
+    def __init__(self, screen_rect, width, height, color=(255,255,255), menu=False, speed=5):
         self.menu = menu
         self.width = width
         self.height = height
@@ -78,13 +78,13 @@ class Ball:
                 self.bounce.sound.play()
             self.moving_away_from_AI = True
             self.vel[0] *= -1;
-            self.speed_incr += 1
+            self.speed_incr += 2
         elif self.rect.colliderect(paddle_right_rect):
             if not self.menu:
                 self.bounce.sound.play()
             self.moving_away_from_AI = False
             self.vel[0] *= -1;
-            self.speed_incr += 1
+            self.speed_incr += 2
             
     def move(self):
         self.true_pos[0] += self.vel[0] * self.speed
@@ -98,7 +98,7 @@ class Ball:
         self.move()
         self.collide_paddle(paddle_left_rect, paddle_right_rect)
         if self.speed_incr >= self.switch_speed:
-            self.speed += 1
+            self.speed += 2
             self.speed_incr = 0
 
     def render(self, screen):

@@ -71,7 +71,7 @@ class States:
         self.button_hover.sound.set_volume(self.button_hover_volume)
         self.background_music_volume = .3
         self.background_music = Music(self.background_music_volume)
-        self.bg_color = (25,25,25)
+        self.bg_color = (20,20,20)
         self.timer = 0.0
         self.quit = False
         self.done = False

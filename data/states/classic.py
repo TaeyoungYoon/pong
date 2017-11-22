@@ -30,7 +30,7 @@ class Classic(tools.States):
         padding = 25 #padding from wall
         pad_right = screen_rect.width - paddle_width - padding
         
-        self.ball = ball_.Ball(self.screen_rect, 10,10, (0,255,0))
+        self.ball = ball_.Ball(self.screen_rect, 10,10, (255,0,255))
         self.paddle_left = paddle.Paddle(padding,paddle_y, paddle_width,paddle_height, (150,150,150))
         self.paddle_right = paddle.Paddle(pad_right,paddle_y, paddle_width,paddle_height, (150,150,150))
         
