@@ -4,7 +4,7 @@ import random
 from . import tools
 
 class Ball:
-    def __init__(self, screen_rect, width, height, color=(255,255,255), menu=False, speed=5):
+    def __init__(self, screen_rect, width, height, color=(255,255,255), menu=False, speed=4):
         self.menu = menu
         self.width = width
         self.height = height
@@ -41,12 +41,15 @@ class Ball:
     def set_ball(self):
         x = self.get_random_float()
         y = self.get_random_float()
-        if x < 0:
-            self.moving_away_from_AI = False
+        # if x < 0:
+        #     self.moving_away_from_AI = False
         self.vel = [x, y]
         self.rect.center = self.center_screen
         self.true_pos = list(self.rect.center)
-        
+        if self.vel[0] < 0:
+            self.moving_away_from_AI = False
+        else :
+            self.moving_away_from_AI = True
         self.speed = self.speed_init #reset speed
         self.speed_incr = 0
         
@@ -74,26 +77,28 @@ class Ball:
             
     def collide_paddle(self, paddle_left_rect, paddle_right_rect,paddle_middle_rect):
         if self.rect.colliderect(paddle_left_rect):
-            if not self.menu:
-                self.bounce.sound.play()
+            #if not self.menu:
             if not self.moving_away_from_AI:
+                self.bounce.sound.play()
                 self.moving_away_from_AI = True
                 self.vel[0] *= -1
-                self.speed_incr += 2
+                self.speed_incr += 1.2
         elif self.rect.colliderect(paddle_right_rect):
-            if not self.menu:
-                self.bounce.sound.play()
+            #if not self.menu:
             if self.moving_away_from_AI:
+                self.bounce.sound.play()
                 self.moving_away_from_AI = False
                 self.vel[0] *= -1
-                self.speed_incr += 2
+                self.speed_incr += 1.2
         elif self.rect.colliderect(paddle_middle_rect):
-            if not self.menu:
-                self.bounce.sound.play()
+            #if not self.menu:
+            self.bounce.sound.play()
             if not self.moving_away_from_AI:
                 self.moving_away_from_AI = True
-                self.vel[0] *= -1
-                self.speed_incr += 2
+            elif self.moving_away_from_AI:
+                self.moving_away_from_AI = False
+            self.vel[0] *= -1
+            self.speed_incr += 1.2
             
     def move(self):
         self.true_pos[0] += self.vel[0] * self.speed
