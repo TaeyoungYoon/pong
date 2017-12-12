@@ -65,26 +65,28 @@ class Ball:
         if self.rect.y < 0 or self.rect.y > self.screen_rect.bottom - self.height:
             if not self.menu:
                 self.bounce.sound.play()
-            self.vel[1] *= -1;
+            self.vel[1] *= -1
             
         if self.menu:
             if self.rect.x < 0 or self.rect.x > self.screen_rect.right- self.height:
-                self.vel[0] *= -1;
+                self.vel[0] *= -1
         return 0
             
     def collide_paddle(self, paddle_left_rect, paddle_right_rect):
         if self.rect.colliderect(paddle_left_rect):
             if not self.menu:
                 self.bounce.sound.play()
-            self.moving_away_from_AI = True
-            self.vel[0] *= -1;
-            self.speed_incr += 2
+            if not self.moving_away_from_AI:
+                self.moving_away_from_AI = True
+                self.vel[0] *= -1
+                self.speed_incr += 2
         elif self.rect.colliderect(paddle_right_rect):
             if not self.menu:
                 self.bounce.sound.play()
-            self.moving_away_from_AI = False
-            self.vel[0] *= -1;
-            self.speed_incr += 2
+            if self.moving_away_from_AI:
+                self.moving_away_from_AI = False
+                self.vel[0] *= -1
+                self.speed_incr += 2
             
     def move(self):
         self.true_pos[0] += self.vel[0] * self.speed
