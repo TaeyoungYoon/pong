@@ -30,6 +30,7 @@ class Ghost(classic.Classic):
         for ball in self.fake_balls:
             ball.render(screen)
         self.paddle_left.render(screen)
+        self.paddle_middle.render(screen)
         self.paddle_right.render(screen)
         if self.pause:
             screen.blit(self.cover,(0,0))
@@ -41,10 +42,11 @@ class Ghost(classic.Classic):
             self.score_text, self.score_rect = self.make_text('{}:{}'.format(self.score[0], self.score[1]),
                 (255,255,255), (self.screen_rect.centerx,25), 50)
             self.paddle_left.update(self.screen_rect)
+            self.paddle_middle.update(self.screen_rect)
             self.paddle_right.update(self.screen_rect)
-            hit_side = self.ball.update(self.paddle_left.rect, self.paddle_right.rect)
+            hit_side = self.ball.update(self.paddle_left.rect, self.paddle_right.rect,self.paddle_middle.rect)
             for ball in self.fake_balls:
-                ball.update(self.bogus_rect, self.bogus_rect)
+                ball.update(self.bogus_rect, self.bogus_rect,self.bogus_rect)
             if hit_side:
                 self.adjust_score(hit_side)
             self.movement(keys)

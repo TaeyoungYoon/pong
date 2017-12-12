@@ -20,7 +20,7 @@ class Classic(tools.States):
         self.cover.set_alpha(200)
         
         #game specific content
-        self.bg_color = (0,0,0)
+        self.bg_color = (1,1,1)
         self.pause = False
         self.score = [0,0]
                 
@@ -28,10 +28,12 @@ class Classic(tools.States):
         paddle_height = 100
         paddle_y = self.screen_rect.centery - (paddle_height // 2)
         padding = 25 #padding from wall
+        midle = 200
         pad_right = screen_rect.width - paddle_width - padding
-        
+        pad_midle = screen_rect.width    
         self.ball = ball_.Ball(self.screen_rect, 10,10, (255,0,255))
         self.paddle_left = paddle.Paddle(padding,paddle_y, paddle_width,paddle_height, (150,150,150))
+        self.paddle_middle = paddle.Paddle(padding+midle,paddle_y, paddle_width,paddle_height, (150,150,150))
         self.paddle_right = paddle.Paddle(pad_right,paddle_y, paddle_width,paddle_height, (150,150,150))
         
         self.ai = AI.AIPaddle(self.screen_rect, self.ball.rect, difficulty)
@@ -77,8 +79,9 @@ class Classic(tools.States):
             self.score_text, self.score_rect = self.make_text('{}:{}'.format(self.score[0], self.score[1]),
                 (255,255,255), (self.screen_rect.centerx,25), 50)
             self.paddle_left.update(self.screen_rect)
+            self.paddle_middle.update(self.screen_rect)
             self.paddle_right.update(self.screen_rect)
-            hit_side = self.ball.update(self.paddle_left.rect, self.paddle_right.rect)
+            hit_side = self.ball.update(self.paddle_left.rect, self.paddle_right.rect,self.paddle_middle.rect)
             if hit_side:
                 self.adjust_score(hit_side)
             self.movement(keys)
@@ -93,6 +96,7 @@ class Classic(tools.States):
         screen.blit(self.score_text, self.score_rect)
         self.ball.render(screen)
         self.paddle_left.render(screen)
+        self.paddle_middle.render(screen)
         self.paddle_right.render(screen)
         if self.pause:
             screen.blit(self.cover,(0,0))

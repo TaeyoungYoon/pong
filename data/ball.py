@@ -72,7 +72,7 @@ class Ball:
                 self.vel[0] *= -1
         return 0
             
-    def collide_paddle(self, paddle_left_rect, paddle_right_rect):
+    def collide_paddle(self, paddle_left_rect, paddle_right_rect,paddle_middle_rect):
         if self.rect.colliderect(paddle_left_rect):
             if not self.menu:
                 self.bounce.sound.play()
@@ -87,18 +87,25 @@ class Ball:
                 self.moving_away_from_AI = False
                 self.vel[0] *= -1
                 self.speed_incr += 2
+        elif self.rect.colliderect(paddle_middle_rect):
+            if not self.menu:
+                self.bounce.sound.play()
+            if not self.moving_away_from_AI:
+                self.moving_away_from_AI = True
+                self.vel[0] *= -1
+                self.speed_incr += 2
             
     def move(self):
         self.true_pos[0] += self.vel[0] * self.speed
         self.true_pos[1] += self.vel[1] * self.speed
         self.rect.center = self.true_pos
         
-    def update(self, paddle_left_rect, paddle_right_rect):
+    def update(self, paddle_left_rect, paddle_right_rect,paddle_middle_rect):
         hit_side = self.collide_walls()
         if hit_side:
             return hit_side
         self.move()
-        self.collide_paddle(paddle_left_rect, paddle_right_rect)
+        self.collide_paddle(paddle_left_rect, paddle_right_rect,paddle_middle_rect)
         if self.speed_incr >= self.switch_speed:
             self.speed += 2
             self.speed_incr = 0

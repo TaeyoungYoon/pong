@@ -9,7 +9,7 @@ class Paddle:
         self.rect.y = y
         self.color = color
         self.surface.fill(self.color)
-        self.speed = 6
+        self.speed = 5
         
     def move(self, x, y):
         self.rect[0] += x * self.speed
