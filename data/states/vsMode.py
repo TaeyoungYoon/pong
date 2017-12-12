@@ -28,7 +28,7 @@ class VsMode(tools.States):
         paddle_height = 100
         paddle_y = self.screen_rect.centery - (paddle_height // 2)
         padding = 25 #padding from wall
-        midle = 200
+        midle = 350
         pad_right = screen_rect.width - paddle_width - padding
         pad_midle = screen_rect.width    
         self.ball = ball_.Ball(self.screen_rect, 10,10, (255,0,255))
