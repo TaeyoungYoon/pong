@@ -7,8 +7,8 @@ class Mode(tools.States):
     def __init__(self, screen_rect):
         tools.States.__init__(self)
         self.screen_rect = screen_rect
-        self.options = ['Practice', 'Ghosts', 'vsMode', 'Back']
-        self.next_list = ['CLASSIC', 'BALLS', 'VSMODE','MENU']
+        self.options = ['Practice', 'Ghosts', 'VS','VS(Ghost)', 'Back']
+        self.next_list = ['CLASSIC', 'BALLS', 'VSMODE','VSGHOST','MENU']
         self.title, self.title_rect = self.make_text('Mode', (75,75,75), (self.screen_rect.centerx, 75), 150)
         self.pre_render_options()
         self.from_bottom = 200
